@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaboBronnenBank - Nieuwe Bron Doorgeven</title>
+  <style>
+    :root {
+      --primary: #0056b3;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #222222;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: var(--primary);
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    nav a:hover, nav a.active {
+      text-decoration: underline;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    main {
+      background-color: var(--card);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #003d80;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigatiebalk -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="bronnen.html">De BronnenBank</a>
+    <a href="nieuwe-bron.html" class="active">Nieuwe Bronnen</a>
+  </nav>
+
+  <div class="container">
+    <main>
+      <h1>Nieuwe Bron Doorgeven</h1>
+      <p>Vul het formulier in om een lesbron of document toe te voegen aan de bank.</p>
+      
+      <form id="bronnenForm">
+        <div class="form-group">
+          <label for="naam">Je naam / Inzender *</label>
+          <input type="text" id="naam" name="naam" required placeholder="Bijv. Juf Sanne">
+        </div>
+
+        <div class="form-group">
+          <label for="titel">Titel van de bron *</label>
+          <input type="text" id="titel" name="titel" required placeholder="Bijv. Rekenonderzoek Groep 6">
+        </div>
+
+        <div class="form-group">
+          <label for="bron">Beschrijving of Link *</label>
+          <textarea id="bron" name="bron" rows="4" required placeholder="Plak hier de link of geef een korte toelichting..."></textarea>
+        </div>
+
+        <button type="submit">Bron Inzenden</button>
+      </form>
+    </main>
+  </div>
+
+</body>
+</html>
