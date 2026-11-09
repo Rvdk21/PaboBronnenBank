@@ -444,7 +444,15 @@
         fetch(SCRIPT_URL)
             .then(res => res.json())
             .then(data => {
-                bronnenData = data;
+                // Ondersteunt zowel directe lijsten als { bronnen: [...] } objecten
+                if (Array.isArray(data)) {
+                    bronnenData = data;
+                } else if (data && Array.isArray(data.bronnen)) {
+                    bronnenData = data.bronnen;
+                } else {
+                    bronnenData = [];
+                }
+
                 renderBronnen(bronnenData);
             })
             .catch(err => {
@@ -454,21 +462,21 @@
 
         function renderBronnen(lijst) {
             const container = document.getElementById('bronnenLijst');
-            if (lijst.length === 0) {
+            if (!lijst || lijst.length === 0) {
                 container.innerHTML = `<div class="loading-text">Geen bronnen gevonden.</div>`;
                 return;
             }
 
-            // Houdt de actieve gefilterde lijst bij voor de modal
+            // Bewaar de actieve gefilterde lijst voor het openen van de juiste modal
             window.huidigeGefilterdeLijst = lijst;
 
             container.innerHTML = lijst.map((item, index) => {
                 return `
-                  <div class="bron-card" data-index="${index}" onclick="openModal(${index})">
-                    <div class="vak-pill">${item.vak || 'Algemeen'}</div>
-                    <div class="bron-naam">${item.naamBron || 'Onbekende Bron'}</div>
-                  </div>
-                `;
+                      <div class="bron-card" data-index="${index}" onclick="openModal(${index})">
+                        <div class="vak-pill">${item.vak || 'Algemeen'}</div>
+                        <div class="bron-naam">${item.naamBron || 'Onbekende Bron'}</div>
+                      </div>
+                    `;
             }).join('');
         }
 
@@ -508,7 +516,7 @@
             }
         });
 
-        /* Search & Filter Logica */
+        /* Verbeterde Zoek & Filter Logica */
         const searchInput = document.getElementById('searchInput');
         const filterVak = document.getElementById('filterVak');
         const filterBladzijde = document.getElementById('filterBladzijde');
@@ -522,27 +530,25 @@
                 let matchesSearch = true;
 
                 if (zoekTerm !== '') {
-                    // Exacte woordmatch met woordgrenzen (\b)
-                    const woordRegex = new RegExp('\\b' + escapeRegExp(zoekTerm) + '\\b', 'i');
+                    // Combineert alle velden van de bron om flexibel te kunnen zoeken
+                    const alleTekst = [
+                        item.naamBron || '',
+                        item.vak || '',
+                        item.apaLiteratuurlijst || '',
+                        item.apaHaakjes || '',
+                        item.inhoud || ''
+                    ].join(' ').toLowerCase();
 
-                    const naamMatch = woordRegex.test(item.naamBron || '');
-                    const apaMatch = woordRegex.test(item.apaLiteratuurlijst || '');
-                    const inhoudMatch = woordRegex.test(item.inhoud || '');
-
-                    matchesSearch = naamMatch || apaMatch || inhoudMatch;
+                    matchesSearch = alleTekst.includes(zoekTerm);
                 }
 
                 const matchesVak = gekozenVak === 'alle' || item.vak === gekozenVak;
-                const matchesBladzijde = gekozenBladzijde === 'alle' || item.bladzijdeAanwezig === gekozenBladzijde;
+                const matchesBladzijde = gekozenBladzijde === 'alle' || (item.bladzijdeAanwezig && item.bladzijdeAanwezig.toString().toLowerCase() === gekozenBladzijde.toLowerCase());
 
                 return matchesSearch && matchesVak && matchesBladzijde;
             });
 
             renderBronnen(gefilterd);
-        }
-
-        function escapeRegExp(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
         searchInput.addEventListener('input', pasFiltersToe);
