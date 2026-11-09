@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaboBronnenBank - Voeg een nieuwe bron toe</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(88, 28, 92, 0.95) 0%, rgba(45, 12, 48, 0.98) 100%), polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            background-color: #3f1543;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%), linear-gradient(60deg, transparent 40%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.15) 70%, transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        header {
+            padding: 35px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+            .logo:hover {
+                opacity: 0.9;
+            }
+
+        .main-container {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 30px 60px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1.page-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .field-container {
+            background-color: #ffffff;
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            padding: 6px 10px 6px 6px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            flex: 1;
+        }
+
+        .field-label {
+            background-color: #f0e6f2;
+            color: #350d36;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 28px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .field-container input[type="text"],
+        .field-container select {
+            border: none;
+            outline: none;
+            font-size: 1.05rem;
+            color: #350d36;
+            background: transparent;
+            width: 100%;
+            padding: 0 15px;
+            font-family: inherit;
+        }
+
+            .field-container input[type="text"]::placeholder,
+            .textarea-container textarea::placeholder {
+                color: #888888;
+                font-style: italic;
+            }
+
+        .checkbox-container {
+            justify-content: space-between;
+            padding-right: 25px;
+        }
+
+            .checkbox-container input[type="checkbox"] {
+                width: 26px;
+                height: 26px;
+                cursor: pointer;
+                accent-color: #350d36;
+            }
+
+        .textarea-container {
+            background-color: #ffffff;
+            border-radius: 35px;
+            padding: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+        }
+
+            .textarea-container .field-label {
+                margin-bottom: 15px;
+                padding: 12px 35px;
+            }
+
+            .textarea-container textarea {
+                border: none;
+                outline: none;
+                font-size: 1.1rem;
+                color: #350d36;
+                background: transparent;
+                width: 100%;
+                min-height: 180px;
+                padding: 0 15px;
+                resize: vertical;
+                font-family: inherit;
+            }
+
+        .submit-btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background-color: #d896ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            padding: 14px 45px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+            .submit-btn:hover {
+                background-color: #c476f5;
+                transform: translateY(-2px);
+            }
+
+        .status-msg {
+            margin-top: 15px;
+            padding: 12px 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        @media (max-width: 850px) {
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo" title="Ga terug naar Home">PaboBronnenBank</a>
+    </header>
+
+    <div class="main-container">
+        <h1 class="page-title">Voeg een nieuwe bron toe.</h1>
+
+        <form id="nieuwBronForm">
+
+            <div class="form-row">
+                <div class="field-container">
+                    <div class="field-label">Naam Bron:</div>
+                    <input type="text" id="naamBron" name="naamBron" placeholder="Doelgericht onderwijs ontwerpen" required>
+                </div>
+
+                <div class="field-container">
+                    <div class="field-label">APA-7 tussen<br>haakjes:</div>
+                    <input type="text" id="apaHaakjes" name="apaHaakjes" placeholder="(Bakx, Ros, & Bolhuis, 2023)" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field-container">
+                    <div class="field-label">APA-7<br>Literatuurlijst:</div>
+                    <input type="text" id="apaLiteratuurlijst" name="apaLiteratuurlijst" placeholder="Bakx, A., Ros, A., & Bolhuis, E. (2023). Doelgericht onderwijs ontwerpen (3e druk)." required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field-container">
+                    <div class="field-label">Vak:</div>
+                    <select id="vak" name="vak" required>
+                        <option value="" disabled selected>Kies een vak...</option>
+                        <option value="Rekenen">Rekenen</option>
+                        <option value="Engels">Engels</option>
+                        <option value="Nederlands">Nederlands</option>
+                        <option value="Pedagogiek">Pedagogiek</option>
+                        <option value="Geschiedenis">Geschiedenis</option>
+                        <option value="Aardrijkskunde">Aardrijkskunde</option>
+                        <option value="Natuur & Techniek">Natuur & Techniek</option>
+                    </select>
+                </div>
+
+                <div class="field-container checkbox-container">
+                    <div class="field-label">Bladzijde aanwezig:</div>
+                    <input type="checkbox" id="bladzijdeAanwezig" name="bladzijdeAanwezig">
+                </div>
+
+                <div class="field-container">
+                    <div class="field-label">BLZ NMR:</div>
+                    <input type="text" id="blzNmr" name="blzNmr" placeholder="bijv. 45-52">
+                </div>
+            </div>
+
+            <div class="textarea-container">
+                <div class="field-label">Inhoud:</div>
+                <textarea id="inhoud" name="inhoud" placeholder="Onderwijs ontwerpen start vanuit heldere leerdoelen en niet vanuit activiteiten of methode." required></textarea>
+
+                <div class="submit-btn-wrapper">
+                    <button type="submit" id="submitBtn" class="submit-btn">Verstuur</button>
+                </div>
+            </div>
+
+            <div id="statusMsg" class="status-msg"></div>
+
+        </form>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHS9wIOHysBRvOSLE8LC-cVfUsrlFtPKSj11UKAkwiRMidskN0B50KU19VhRJPhlTqsg/exec";
+
+        const form = document.getElementById('nieuwBronForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMsg = document.getElementById('statusMsg');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Verzenden...";
+
+            const payload = {
+                naamBron: document.getElementById('naamBron').value,
+                apaHaakjes: document.getElementById('apaHaakjes').value,
+                apaLiteratuurlijst: document.getElementById('apaLiteratuurlijst').value,
+                vak: document.getElementById('vak').value,
+                bladzijdeAanwezig: document.getElementById('bladzijdeAanwezig').checked,
+                blzNmr: document.getElementById('blzNmr').value,
+                inhoud: document.getElementById('inhoud').value
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(() => {
+                    statusMsg.style.display = "block";
+                    statusMsg.style.backgroundColor = "#d4edda";
+                    statusMsg.style.color = "#155724";
+                    statusMsg.textContent = "Bedankt! De bron is succesvol opgeslagen in de PaboBronnenBank.";
+                    form.reset();
+                })
+                .catch(err => {
+                    statusMsg.style.display = "block";
+                    statusMsg.style.backgroundColor = "#f8d7da";
+                    statusMsg.style.color = "#721c24";
+                    statusMsg.textContent = "Er is iets misgegaan bij het versturen. Probeer het opnieuw.";
+                    console.error('Fout:', err);
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Verstuur";
+                });
+        });
+    </script>
+
+</body>
+</html>

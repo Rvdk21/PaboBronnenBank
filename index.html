@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaboBronnenBank - De plek voor al je bronnen</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            /* Paarse achtergrond met subtiel hoekig verloop/patroon */
+            background: linear-gradient(135deg, rgba(88, 28, 92, 0.95) 0%, rgba(45, 12, 48, 0.98) 100%), polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            background-color: #3f1543;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+            /* Subtiel patroon-effect via pseudo-element */
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%), linear-gradient(60deg, transparent 40%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.15) 70%, transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        /* Header met alleen het logo links (geen navigatieknoppen rechts) */
+        header {
+            padding: 35px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hoofdcontent indeling */
+        .hero-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 50px 60px 50px;
+            max-width: 1350px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Linkerkolom */
+        .left-col h1 {
+            font-size: 2.3rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .img-card {
+            width: 100%;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+            .img-card img {
+                width: 100%;
+                height: auto;
+                display: block;
+                object-fit: cover;
+            }
+
+        /* Rechterkolom */
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+            .right-col h2 {
+                font-size: 2.3rem;
+                margin-bottom: 25px;
+                font-weight: bold;
+                letter-spacing: 0.5px;
+            }
+
+            .right-col p {
+                font-size: 1.25rem;
+                line-height: 1.55;
+                margin-bottom: 40px;
+                max-width: 480px;
+                opacity: 0.95;
+            }
+
+        /* Witte afgeronde knop */
+        .btn-primary {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #350d36;
+            text-decoration: none;
+            padding: 16px 45px;
+            border-radius: 24px;
+            font-size: 1.45rem;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s, background-color 0.2s;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                background-color: #f8f8f8;
+            }
+
+        /* Mobiele weergave */
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            header {
+                text-align: center;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header met alleen de titel links -->
+    <header>
+        <a href="index.html" class="logo">PaboBronnenBank</a>
+    </header>
+
+    <!-- Hoofdsectie -->
+    <div class="hero-container">
+        <div class="grid">
+
+            <!-- Linkerkolom -->
+            <div class="left-col">
+                <h1>De plek voor al je bronnen</h1>
+                <div class="img-card">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Pabo studenten werken samen aan studiemateriaal">
+                </div>
+            </div>
+
+            <!-- Rechterkolom -->
+            <div class="right-col">
+                <h2>Wat is de PaboBronnenBank</h2>
+                <p>
+                    De PaboBronnenBank verbindt pabo-studenten door het eenvoudig toegankelijk maken van essentieel studiemateriaal en praktijkbronnen. Hét platform voor en door de leerkracht van de toekomst.
+                </p>
+                <a href="bronnen.html" class="btn-primary">
+                    Bekijk de<br>Bronnen
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
