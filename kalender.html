@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaboBronnenBank - Kalender & Nieuws</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(88, 28, 92, 0.95) 0%, rgba(45, 12, 48, 0.98) 100%), polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            background-color: #3f1543;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%), linear-gradient(60deg, transparent 40%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.15) 70%, transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        header {
+            padding: 35px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+            .logo:hover {
+                opacity: 0.9;
+            }
+
+        .main-container {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 30px 60px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .kalender-list, .nieuws-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Standard Card for Agenda */
+        .card-item {
+            background-color: #ffffff;
+            color: #350d36;
+            border-radius: 25px;
+            padding: 20px 25px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .date-badge {
+            background-color: #350d36;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+        }
+
+        .time-badge {
+            background-color: #f0e6f2;
+            color: #350d36;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+        }
+
+        .type-badge {
+            background-color: #d896ff;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .card-desc {
+            font-size: 1.05rem;
+            line-height: 1.55;
+            color: #333;
+            margin-top: 12px;
+        }
+
+        .more-btn {
+            margin-top: 20px;
+            background-color: #ffffff;
+            color: #350d36;
+            border: none;
+            border-radius: 25px;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s, transform 0.2s;
+            width: 100%;
+            text-align: center;
+        }
+
+            .more-btn:hover {
+                background-color: #f0f0f0;
+                transform: translateY(-2px);
+            }
+
+        /* Custom Design Nieuws Cards volgens schets */
+        .nieuws-card-custom {
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            .nieuws-card-custom:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            }
+
+        .nieuws-header-bar {
+            background-color: #e3a6f7;
+            color: #000000;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nieuws-header-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .nieuws-header-date {
+            font-size: 0.95rem;
+            font-weight: bold;
+            opacity: 0.8;
+            white-space: nowrap;
+        }
+
+        .nieuws-body {
+            display: none;
+            padding: 25px;
+            position: relative;
+        }
+
+            .nieuws-body.open {
+                display: block;
+            }
+
+        .nieuws-content-wrapper::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .nieuws-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #000000;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .nieuws-photo-box {
+            float: right;
+            width: 150px;
+            height: 150px;
+            border-radius: 25px;
+            object-fit: cover;
+            margin-left: 20px;
+            margin-bottom: 10px;
+            background-color: #cbd5e1;
+        }
+
+        /* Datum rechtsonder in geopende kaart */
+        .nieuws-footer-date {
+            text-align: right;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #555555;
+            clear: both;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nieuws-photo-box {
+                float: none;
+                width: 100%;
+                height: 200px;
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo" title="Ga terug naar Home">PaboBronnenBank</a>
+    </header>
+
+    <div class="main-container">
+        <div class="grid-container">
+
+            <!-- Kalender Kolom -->
+            <div>
+                <h1 class="section-title">Agenda & Toetsing</h1>
+                <div class="kalender-list" id="kalenderLijst">
+                    <div class="loading-text">Agenda laden...</div>
+                </div>
+                <button id="toonMeerKalenderBtn" class="more-btn" style="display: none;">Toon alle items</button>
+            </div>
+
+            <!-- Nieuws Kolom -->
+            <div>
+                <h2 class="section-title">Laatste Nieuws</h2>
+                <div class="nieuws-list" id="nieuwsLijst">
+                    <div class="loading-text">Nieuwsberichten laden...</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHS9wIOHysBRvOSLE8LC-cVfUsrlFtPKSj11UKAkwiRMidskN0B50KU19VhRJPhlTqsg/exec";
+
+        let alleKalenderItems = [];
+        let kalenderToonAlles = false;
+
+        fetch(SCRIPT_URL)
+            .then(res => res.json())
+            .then(data => {
+                alleKalenderItems = data.kalender || data.Kalender || [];
+                const nieuwsItems = data.nieuws || data.Nieuws || [];
+
+                renderKalender();
+                renderNieuws(nieuwsItems);
+            })
+            .catch(err => {
+                document.getElementById('kalenderLijst').innerHTML = `<div class="card-item"><div class="card-title">Er is een fout opgetreden bij het laden.</div></div>`;
+                document.getElementById('nieuwsLijst').innerHTML = `<div class="card-item"><div class="card-title">Er is een fout opgetreden bij het laden.</div></div>`;
+                console.error('Fout bij ophalen kalender/nieuws:', err);
+            });
+
+        function formatteerDatum(d) {
+            if (!d) return '';
+            const parsed = new Date(d);
+            if (!isNaN(parsed.getTime())) {
+                return parsed.toLocaleDateString('nl-NL');
+            }
+            return d;
+        }
+
+        // Render Kalender (Standaard 3 items)
+        function renderKalender() {
+            const container = document.getElementById('kalenderLijst');
+            const toonMeerBtn = document.getElementById('toonMeerKalenderBtn');
+
+            if (alleKalenderItems.length === 0) {
+                container.innerHTML = `<div class="card-item"><div class="card-title">Geen kalenderitems bekend.</div></div>`;
+                toonMeerBtn.style.display = 'none';
+                return;
+            }
+
+            const teTonenItems = kalenderToonAlles ? alleKalenderItems : alleKalenderItems.slice(0, 3);
+
+            container.innerHTML = teTonenItems.map(item => {
+                const datumWeergave = formatteerDatum(item.datum) || 'Datum n.t.b.';
+                return `
+              <div class="card-item">
+                <div class="card-header">
+                  <div class="badges">
+                    <span class="date-badge">${datumWeergave}</span>
+                    ${item.tijdstip ? `<span class="time-badge">${item.tijdstip}</span>` : ''}
+                  </div>
+                  ${item.type ? `<span class="type-badge">${item.type}</span>` : ''}
+                </div>
+                ${item.info ? `<div class="card-desc">${item.info}</div>` : ''}
+              </div>
+            `;
+            }).join('');
+
+            if (alleKalenderItems.length > 3) {
+                toonMeerBtn.style.display = 'block';
+                toonMeerBtn.textContent = kalenderToonAlles ? 'Toon minder items' : `Toon alle items (${alleKalenderItems.length})`;
+            } else {
+                toonMeerBtn.style.display = 'none';
+            }
+        }
+
+        document.getElementById('toonMeerKalenderBtn').addEventListener('click', () => {
+            kalenderToonAlles = !kalenderToonAlles;
+            renderKalender();
+        });
+
+        // Render Nieuws (Datum in kopbalk én rechtsonderin)
+        function renderNieuws(lijst) {
+            const container = document.getElementById('nieuwsLijst');
+            if (lijst.length === 0) {
+                container.innerHTML = `<div class="card-item"><div class="card-title">Geen nieuwsberichten.</div></div>`;
+                return;
+            }
+
+            container.innerHTML = lijst.map((item, index) => {
+                const fotoHTML = item.foto ? `<img src="${item.foto}" alt="${item.titel}" class="nieuws-photo-box">` : '';
+                const geformatteerdeDatum = formatteerDatum(item.datum);
+
+                return `
+              <div class="nieuws-card-custom" onclick="toggleNieuws(${index})">
+                <div class="nieuws-header-bar">
+                  <div class="nieuws-header-title">${item.titel || 'Nieuwsbericht'}</div>
+                  ${geformatteerdeDatum ? `<div class="nieuws-header-date">${geformatteerdeDatum}</div>` : ''}
+                </div>
+                <div class="nieuws-body" id="nieuws-body-${index}">
+                  <div class="nieuws-content-wrapper">
+                    ${fotoHTML}
+                    <div class="nieuws-text">${item.bericht || ''}</div>
+                  </div>
+                  ${geformatteerdeDatum ? `<div class="nieuws-footer-date">${geformatteerdeDatum}</div>` : ''}
+                </div>
+              </div>
+            `;
+            }).join('');
+        }
+
+        function toggleNieuws(index) {
+            const el = document.getElementById(`nieuws-body-${index}`);
+            if (el) {
+                el.classList.toggle('open');
+            }
+        }
+    </script>
+
+</body>
+</html>
