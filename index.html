@@ -37,11 +37,14 @@
                 z-index: 0;
             }
 
-        /* Header met alleen het logo links (geen navigatieknoppen rechts) */
+        /* Header met logo links en 2 knoppen rechts */
         header {
             padding: 35px 50px;
             position: relative;
             z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
@@ -51,6 +54,29 @@
             text-decoration: none;
             letter-spacing: 0.5px;
         }
+
+        /* Navigatieknoppen in de header */
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background-color: #ffffff;
+            color: #350d36;
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+            .nav-btn:hover {
+                transform: translateY(-2px);
+                background-color: #f8f8f8;
+            }
 
         /* Hoofdcontent indeling */
         .hero-container {
@@ -150,6 +176,8 @@
             }
 
             header {
+                flex-direction: column;
+                gap: 20px;
                 text-align: center;
                 padding: 25px;
             }
@@ -158,9 +186,13 @@
 </head>
 <body>
 
-    <!-- Header met alleen de titel links -->
+    <!-- Header met titel links en knoppen rechts -->
     <header>
         <a href="index.html" class="logo">PaboBronnenBank</a>
+        <nav class="nav-buttons">
+            <a href="bronnen.html" class="nav-btn">BronnenBank</a>
+            <a href="kalender.html" class="nav-btn">Agenda &amp; Nieuws</a>
+        </nav>
     </header>
 
     <!-- Hoofdsectie -->
