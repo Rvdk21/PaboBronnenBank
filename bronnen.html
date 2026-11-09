@@ -1,381 +1,554 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PaboBronnenBank - De BronnenBank</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaboBronnenBank - De BronnenBank</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: 
-        linear-gradient(135deg, rgba(88, 28, 92, 0.95) 0%, rgba(45, 12, 48, 0.98) 100%),
-        polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      background-color: #3f1543;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(88, 28, 92, 0.95) 0%, rgba(45, 12, 48, 0.98) 100%), polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            background-color: #3f1543;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
-        linear-gradient(60deg, transparent 40%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.15) 70%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%), linear-gradient(60deg, transparent 40%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.15) 70%, transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+            }
 
-    header {
-      padding: 35px 50px;
-      position: relative;
-      z-index: 1;
-    }
+        header {
+            padding: 35px 50px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .logo {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ffffff;
-      text-decoration: none;
-      letter-spacing: 0.5px;
-    }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
 
-    .logo:hover {
-      opacity: 0.9;
-    }
+            .logo:hover {
+                opacity: 0.9;
+            }
 
-    .main-container {
-      flex: 1;
-      max-width: 1100px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 30px 60px 30px;
-      position: relative;
-      z-index: 1;
-    }
+        .main-container {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 30px 60px 30px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .search-filter-bar {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 25px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+        .search-filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-    .search-box {
-      flex: 1;
-      min-width: 250px;
-      position: relative;
-      background-color: #ffffff;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      padding: 5px 25px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+            background-color: #ffffff;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 5px 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
 
-    .search-box label {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #350d36;
-      margin-right: 15px;
-      user-select: none;
-    }
+            .search-box label {
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #350d36;
+                margin-right: 15px;
+                user-select: none;
+            }
 
-    .search-box input {
-      border: none;
-      outline: none;
-      font-size: 1.1rem;
-      width: 100%;
-      color: #350d36;
-      background: transparent;
-    }
+            .search-box input {
+                border: none;
+                outline: none;
+                font-size: 1.1rem;
+                width: 100%;
+                color: #350d36;
+                background: transparent;
+            }
 
-    .search-icon {
-      width: 24px;
-      height: 24px;
-      fill: none;
-      stroke: #350d36;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #350d36;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
-    .filter-btn, .add-btn {
-      background-color: #ffffff;
-      color: #350d36;
-      border: none;
-      border-radius: 30px;
-      padding: 14px 30px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      white-space: nowrap;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      transition: background-color 0.2s, transform 0.2s;
-    }
+        .filter-btn, .add-btn {
+            background-color: #ffffff;
+            color: #350d36;
+            border: none;
+            border-radius: 30px;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.2s, transform 0.2s;
+        }
 
-    .filter-btn:hover, .add-btn:hover {
-      background-color: #f0f0f0;
-      transform: translateY(-2px);
-    }
+            .filter-btn:hover, .add-btn:hover {
+                background-color: #f0f0f0;
+                transform: translateY(-2px);
+            }
 
-    .filter-panel {
-      display: none;
-      background-color: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(5px);
-      border-radius: 20px;
-      padding: 20px 30px;
-      margin-bottom: 30px;
-      gap: 30px;
-    }
+        .filter-panel {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            gap: 30px;
+        }
 
-    .filter-panel.open {
-      display: flex;
-      flex-wrap: wrap;
-    }
+            .filter-panel.open {
+                display: flex;
+                flex-wrap: wrap;
+            }
 
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-    .filter-group label {
-      font-weight: bold;
-      font-size: 1rem;
-    }
+            .filter-group label {
+                font-weight: bold;
+                font-size: 1rem;
+            }
 
-    .filter-group select {
-      padding: 10px 15px;
-      border-radius: 12px;
-      border: none;
-      font-size: 1rem;
-      color: #350d36;
-      outline: none;
-    }
+            .filter-group select {
+                padding: 10px 15px;
+                border-radius: 12px;
+                border: none;
+                font-size: 1rem;
+                color: #350d36;
+                outline: none;
+            }
 
-    .bronnen-wrapper {
-      position: relative;
-      max-height: 520px;
-      overflow-y: auto;
-      padding-right: 15px;
-    }
+        .bronnen-wrapper {
+            position: relative;
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
 
-    .bronnen-wrapper::-webkit-scrollbar {
-      width: 12px;
-    }
+            .bronnen-wrapper::-webkit-scrollbar {
+                width: 12px;
+            }
 
-    .bronnen-wrapper::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-    }
+            .bronnen-wrapper::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+            }
 
-    .bronnen-wrapper::-webkit-scrollbar-thumb {
-      background: #ffffff;
-      border-radius: 10px;
-    }
+            .bronnen-wrapper::-webkit-scrollbar-thumb {
+                background: #ffffff;
+                border-radius: 10px;
+            }
 
-    .bron-card {
-      background-color: #ffffff;
-      border-radius: 35px;
-      padding: 12px 20px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-    }
+        /* Bron Kaart */
+        .bron-card {
+            background-color: #ffffff;
+            border-radius: 35px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-    .vak-pill {
-      background-color: #f0e6f2;
-      color: #350d36;
-      font-size: 1.3rem;
-      font-weight: bold;
-      padding: 14px 40px;
-      border-radius: 25px;
-      min-width: 210px;
-      text-align: center;
-    }
+            .bron-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
 
-    .bron-naam {
-      background-color: #f0e6f2;
-      color: #350d36;
-      font-size: 1.2rem;
-      font-weight: bold;
-      padding: 14px 30px;
-      border-radius: 25px;
-      flex: 1;
-    }
+        .vak-pill {
+            background-color: #f0e6f2;
+            color: #350d36;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 14px 40px;
+            border-radius: 25px;
+            min-width: 220px;
+            text-align: center;
+        }
 
-    .loading-text {
-      text-align: center;
-      font-size: 1.3rem;
-      padding: 30px;
-    }
+        .bron-naam {
+            background-color: #f0e6f2;
+            color: #350d36;
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 14px 30px;
+            border-radius: 25px;
+            flex: 1;
+        }
 
-    @media (max-width: 768px) {
-      .search-filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .filter-btn, .add-btn {
-        text-align: center;
-      }
-      .bron-card {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .vak-pill {
-        min-width: auto;
-      }
-    }
-  </style>
+        .loading-text {
+            text-align: center;
+            font-size: 1.3rem;
+            padding: 30px;
+        }
+
+        /* Modal (Pop-up venster) Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background-color: #ffffff;
+            color: #350d36;
+            border-radius: 35px;
+            max-width: 750px;
+            width: 100%;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #350d36;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .modal-vak-pill {
+            background-color: #350d36;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 22px;
+            border-radius: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #350d36;
+        }
+
+        .modal-field {
+            background-color: #f0e6f2;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-field-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-field-content {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: #222;
+        }
+
+        @media (max-width: 768px) {
+            .search-filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-btn, .add-btn {
+                text-align: center;
+            }
+
+            .bron-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .vak-pill {
+                min-width: auto;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <a href="index.html" class="logo" title="Ga terug naar Home">PaboBronnenBank</a>
-  </header>
+    <header>
+        <a href="index.html" class="logo" title="Ga terug naar Home">PaboBronnenBank</a>
+    </header>
 
-  <div class="main-container">
-    
-    <div class="search-filter-bar">
-      <div class="search-box">
-        <label for="searchInput">Zoeken</label>
-        <svg class="search-icon" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="7"></circle>
-          <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-        </svg>
-        <input type="text" id="searchInput" placeholder="" aria-label="Zoek naar een bron of inhoud">
-      </div>
+    <div class="main-container">
 
-      <button class="filter-btn" id="filterToggleBtn">Filters</button>
-      <a href="nieuwe-bron.html" class="add-btn">+ Voeg bron toe</a>
+        <div class="search-filter-bar">
+            <div class="search-box">
+                <label for="searchInput">Zoeken</label>
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+                </svg>
+                <input type="text" id="searchInput" placeholder="" aria-label="Zoek naar een bron of inhoud">
+            </div>
+
+            <button class="filter-btn" id="filterToggleBtn">Filters</button>
+            <a href="nieuwe-bron.html" class="add-btn">+ Voeg bron toe</a>
+        </div>
+
+        <div class="filter-panel" id="filterPanel">
+            <div class="filter-group">
+                <label for="filterVak">Filter op Vak:</label>
+                <select id="filterVak">
+                    <option value="alle">Alle vakken</option>
+                    <option value="Nederlands">Nederlands</option>
+                    <option value="Rekenen">Rekenen</option>
+                    <option value="Muziek">Muziek</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Beeldende vorming">Beeldende vorming</option>
+                    <option value="Aardrijkskunde">Aardrijkskunde</option>
+                    <option value="Geschiedenis">Geschiedenis</option>
+                    <option value="NW&T">NW&T</option>
+                    <option value="Menswetenschappen">Menswetenschappen</option>
+                    <option value="Bewegingsonderwijs">Bewegingsonderwijs</option>
+                    <option value="Handschriftonderwijs">Handschriftonderwijs</option>
+                    <option value="Engels">Engels</option>
+                    <option value="Algemeen">Algemeen</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filterBladzijde">Bladzijde vermeld:</label>
+                <select id="filterBladzijde">
+                    <option value="alle">Alle</option>
+                    <option value="Ja">Ja</option>
+                    <option value="Nee">Nee</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="bronnen-wrapper" id="bronnenLijst">
+            <div class="loading-text">Bronnen laden uit de Google Spreadsheet...</div>
+        </div>
+
     </div>
 
-    <div class="filter-panel" id="filterPanel">
-      <div class="filter-group">
-        <label for="filterVak">Filter op Vak:</label>
-        <select id="filterVak">
-          <option value="alle">Alle vakken</option>
-          <option value="Nederlands">Nederlands</option>
-          <option value="Rekenen">Rekenen</option>
-          <option value="Muziek">Muziek</option>
-          <option value="Drama">Drama</option>
-          <option value="Beeldende vorming">Beeldende vorming</option>
-          <option value="Aardrijkskunde">Aardrijkskunde</option>
-          <option value="Geschiedenis">Geschiedenis</option>
-          <option value="NW&T">NW&T</option>
-          <option value="Menswetenschappen">Menswetenschappen</option>
-          <option value="Bewegingsonderwijs">Bewegingsonderwijs</option>
-          <option value="Handschriftonderwijs">Handschriftonderwijs</option>
-          <option value="Engels">Engels</option>
-          <option value="Algemeen">Algemeen</option>
-        </select>
-      </div>
+    <!-- Pop-up Modal voor Bron Details -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-card">
+            <span class="modal-close" id="modalCloseBtn">&times;</span>
 
-      <div class="filter-group">
-        <label for="filterBladzijde">Bladzijde vermeld:</label>
-        <select id="filterBladzijde">
-          <option value="alle">Alle</option>
-          <option value="Ja">Ja</option>
-          <option value="Nee">Nee</option>
-        </select>
-      </div>
+            <div class="modal-header">
+                <span class="modal-vak-pill" id="modalVak">Vak</span>
+                <h2 class="modal-title" id="modalNaamBron">Naam Bron</h2>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-field-title">APA-7 Literatuurverwijzing:</div>
+                <div class="modal-field-content" id="modalApaLit">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-field-title">APA-7 In-Tekst Citaat (Tussen haakjes):</div>
+                <div class="modal-field-content" id="modalApaHaakjes">-</div>
+            </div>
+
+            <div class="modal-field" id="modalBlzField">
+                <div class="modal-field-title">Bladzijde nummer:</div>
+                <div class="modal-field-content" id="modalBlzNmr">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-field-title">Inhoud / Toelichting:</div>
+                <div class="modal-field-content" id="modalInhoud">-</div>
+            </div>
+        </div>
     </div>
 
-    <div class="bronnen-wrapper" id="bronnenLijst">
-      <div class="loading-text">Bronnen laden uit de Google Spreadsheet...</div>
-    </div>
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHS9wIOHysBRvOSLE8LC-cVfUsrlFtPKSj11UKAkwiRMidskN0B50KU19VhRJPhlTqsg/exec";
 
-  </div>
+        const filterToggleBtn = document.getElementById('filterToggleBtn');
+        const filterPanel = document.getElementById('filterPanel');
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHS9wIOHysBRvOSLE8LC-cVfUsrlFtPKSj11UKAkwiRMidskN0B50KU19VhRJPhlTqsg/exec";
+        filterToggleBtn.addEventListener('click', () => {
+            filterPanel.classList.toggle('open');
+        });
 
-    const filterToggleBtn = document.getElementById('filterToggleBtn');
-    const filterPanel = document.getElementById('filterPanel');
+        let bronnenData = [];
 
-    filterToggleBtn.addEventListener('click', () => {
-      filterPanel.classList.toggle('open');
-    });
+        fetch(SCRIPT_URL)
+            .then(res => res.json())
+            .then(data => {
+                bronnenData = data;
+                renderBronnen(bronnenData);
+            })
+            .catch(err => {
+                document.getElementById('bronnenLijst').innerHTML = `<div class="loading-text">Er is een fout opgetreden bij het laden van de bronnen.</div>`;
+                console.error('Fout bij ophalen bronnen:', err);
+            });
 
-    let bronnenData = [];
+        function renderBronnen(lijst) {
+            const container = document.getElementById('bronnenLijst');
+            if (lijst.length === 0) {
+                container.innerHTML = `<div class="loading-text">Geen bronnen gevonden.</div>`;
+                return;
+            }
 
-    fetch(SCRIPT_URL)
-      .then(res => res.json())
-      .then(data => {
-        bronnenData = data;
-        renderBronnen(bronnenData);
-      })
-      .catch(err => {
-        document.getElementById('bronnenLijst').innerHTML = `<div class="loading-text">Er is een fout opgetreden bij het laden van de bronnen.</div>`;
-        console.error('Fout bij ophalen bronnen:', err);
-      });
+            // Houdt de actieve gefilterde lijst bij voor de modal
+            window.huidigeGefilterdeLijst = lijst;
 
-    function renderBronnen(lijst) {
-      const container = document.getElementById('bronnenLijst');
-      if (lijst.length === 0) {
-        container.innerHTML = `<div class="loading-text">Geen bronnen gevonden.</div>`;
-        return;
-      }
+            container.innerHTML = lijst.map((item, index) => {
+                return `
+                  <div class="bron-card" data-index="${index}" onclick="openModal(${index})">
+                    <div class="vak-pill">${item.vak || 'Algemeen'}</div>
+                    <div class="bron-naam">${item.naamBron || 'Onbekende Bron'}</div>
+                  </div>
+                `;
+            }).join('');
+        }
 
-      container.innerHTML = lijst.map(item => {
-        const blzInfo = item.blzNmr ? ` (p. ${item.blzNmr})` : '';
-        const volledigeBron = `${item.apaLiteratuurlijst}${blzInfo}`;
-        return `
-          <div class="bron-card" data-vak="${item.vak}" data-bladzijde="${item.bladzijdeAanwezig}">
-            <div class="vak-pill">${item.vak || 'Algemeen'}</div>
-            <div class="bron-naam">${volledigeBron}</div>
-          </div>
-        `;
-      }).join('');
-    }
+        /* Modal Functionaliteit */
+        const detailModal = document.getElementById('detailModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
 
-    const searchInput = document.getElementById('searchInput');
-    const filterVak = document.getElementById('filterVak');
-    const filterBladzijde = document.getElementById('filterBladzijde');
+        function openModal(index) {
+            // Pakt de bron uit de actieve gefilterde lijst
+            const bron = window.huidigeGefilterdeLijst ? window.huidigeGefilterdeLijst[index] : bronnenData[index];
+            if (!bron) return;
 
-    function pasFiltersToe() {
-      const zoekTerm = searchInput.value.toLowerCase();
-      const gekozenVak = filterVak.value;
-      const gekozenBladzijde = filterBladzijde.value;
+            document.getElementById('modalVak').textContent = bron.vak || 'Algemeen';
+            document.getElementById('modalNaamBron').textContent = bron.naamBron || 'Bron Detail';
+            document.getElementById('modalApaLit').textContent = bron.apaLiteratuurlijst || '-';
+            document.getElementById('modalApaHaakjes').textContent = bron.apaHaakjes || '-';
 
-      const gefilterd = bronnenData.filter(item => {
-        const vakMatch = (item.vak || '').toLowerCase().includes(zoekTerm);
-        const naamMatch = (item.naamBron || '').toLowerCase().includes(zoekTerm);
-        const apaMatch = (item.apaLiteratuurlijst || '').toLowerCase().includes(zoekTerm);
-        const inhoudMatch = (item.inhoud || '').toLowerCase().includes(zoekTerm);
+            if (bron.blzNmr) {
+                document.getElementById('modalBlzField').style.display = 'block';
+                document.getElementById('modalBlzNmr').textContent = bron.blzNmr;
+            } else {
+                document.getElementById('modalBlzField').style.display = 'none';
+            }
 
-        const matchesSearch = vakMatch || naamMatch || apaMatch || inhoudMatch;
-        const matchesVak = gekozenVak === 'alle' || item.vak === gekozenVak;
-        const matchesBladzijde = gekozenBladzijde === 'alle' || item.bladzijdeAanwezig === gekozenBladzijde;
+            document.getElementById('modalInhoud').textContent = bron.inhoud || 'Geen inhoud opgegeven.';
 
-        return matchesSearch && matchesVak && matchesBladzijde;
-      });
+            detailModal.style.display = 'flex';
+        }
 
-      renderBronnen(gefilterd);
-    }
+        modalCloseBtn.addEventListener('click', () => {
+            detailModal.style.display = 'none';
+        });
 
-    searchInput.addEventListener('input', pasFiltersToe);
-    filterVak.addEventListener('change', pasFiltersToe);
-    filterBladzijde.addEventListener('change', pasFiltersToe);
-  </script>
+        window.addEventListener('click', (e) => {
+            if (e.target === detailModal) {
+                detailModal.style.display = 'none';
+            }
+        });
+
+        /* Search & Filter Logica */
+        const searchInput = document.getElementById('searchInput');
+        const filterVak = document.getElementById('filterVak');
+        const filterBladzijde = document.getElementById('filterBladzijde');
+
+        function pasFiltersToe() {
+            const zoekTerm = searchInput.value.toLowerCase().trim();
+            const gekozenVak = filterVak.value;
+            const gekozenBladzijde = filterBladzijde.value;
+
+            const gefilterd = bronnenData.filter(item => {
+                let matchesSearch = true;
+
+                if (zoekTerm !== '') {
+                    // Exacte woordmatch met woordgrenzen (\b)
+                    const woordRegex = new RegExp('\\b' + escapeRegExp(zoekTerm) + '\\b', 'i');
+
+                    const naamMatch = woordRegex.test(item.naamBron || '');
+                    const apaMatch = woordRegex.test(item.apaLiteratuurlijst || '');
+                    const inhoudMatch = woordRegex.test(item.inhoud || '');
+
+                    matchesSearch = naamMatch || apaMatch || inhoudMatch;
+                }
+
+                const matchesVak = gekozenVak === 'alle' || item.vak === gekozenVak;
+                const matchesBladzijde = gekozenBladzijde === 'alle' || item.bladzijdeAanwezig === gekozenBladzijde;
+
+                return matchesSearch && matchesVak && matchesBladzijde;
+            });
+
+            renderBronnen(gefilterd);
+        }
+
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        searchInput.addEventListener('input', pasFiltersToe);
+        filterVak.addEventListener('change', pasFiltersToe);
+        filterBladzijde.addEventListener('change', pasFiltersToe);
+    </script>
 
 </body>
 </html>
