@@ -13,7 +13,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            /* Paarse achtergrond met subtiel hoekig verloop/patroon */
+            /* Originele paarse stijl */
             background: linear-gradient(135deg, rgba(88, 28, 92, 0.95) 0%, rgba(45, 12, 48, 0.98) 100%), polygon(0 0, 100% 0, 100% 100%, 0 100%);
             background-color: #3f1543;
             color: #ffffff;
@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-            /* Subtiel patroon-effect via pseudo-element */
             body::before {
                 content: "";
                 position: absolute;
@@ -37,7 +36,6 @@
                 z-index: 0;
             }
 
-        /* Header met logo links en 2 knoppen rechts */
         header {
             padding: 35px 50px;
             position: relative;
@@ -55,10 +53,10 @@
             letter-spacing: 0.5px;
         }
 
-        /* Navigatieknoppen in de header */
         .nav-buttons {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .nav-btn {
@@ -71,6 +69,8 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s, background-color 0.2s;
+            border: none;
+            cursor: pointer;
         }
 
             .nav-btn:hover {
@@ -78,13 +78,12 @@
                 background-color: #f8f8f8;
             }
 
-        /* Hoofdcontent indeling */
         .hero-container {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 50px 60px 50px;
+            padding: 20px 50px 40px 50px;
             max-width: 1350px;
             margin: 0 auto;
             width: 100%;
@@ -100,7 +99,6 @@
             width: 100%;
         }
 
-        /* Linkerkolom */
         .left-col h1 {
             font-size: 2.3rem;
             margin-bottom: 25px;
@@ -123,7 +121,6 @@
                 object-fit: cover;
             }
 
-        /* Rechterkolom */
         .right-col {
             display: flex;
             flex-direction: column;
@@ -147,7 +144,6 @@
                 opacity: 0.95;
             }
 
-        /* Witte afgeronde knop */
         .btn-primary {
             display: inline-block;
             background-color: #ffffff;
@@ -168,7 +164,205 @@
                 background-color: #f8f8f8;
             }
 
-        /* Mobiele weergave */
+        /* --- Recensies Slider / Ticker (Rustig Roulerend) --- */
+        .reviews-section {
+            width: 100%;
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 20px 50px 60px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+            .reviews-section h3 {
+                text-align: center;
+                font-size: 1.8rem;
+                margin-bottom: 25px;
+                letter-spacing: 0.5px;
+            }
+
+        .slider-viewport {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 25px;
+            width: max-content;
+            animation: scrollLeft 25s linear infinite;
+        }
+
+            .slider-track:hover {
+                animation-play-state: paused; /* Pauzeert bij hover */
+            }
+
+        .review-card {
+            width: calc((1350px - 100px - 50px) / 3); /* Zorgt dat er precies max 3 zichtbaar zijn op desktop */
+            min-width: 320px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            min-height: 180px;
+            flex-shrink: 0;
+        }
+
+        .stars {
+            color: #ffcc00;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .review-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-style: italic;
+            opacity: 0.95;
+            flex-grow: 1;
+        }
+
+        .review-author {
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-align: right;
+            color: #ffffff;
+            opacity: 0.85;
+        }
+
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-50% - 12.5px));
+            }
+        }
+
+        /* --- Modal Popup Style --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+            .modal-overlay.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+        .modal {
+            background: #2d0c30;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 35px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            color: #ffffff;
+        }
+
+            .modal h3 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            .form-group input, .form-group textarea {
+                width: 100%;
+                padding: 12px 16px;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.95);
+                color: #350d36;
+                font-size: 1rem;
+                font-family: inherit;
+            }
+
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 8px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+            .star-rating input {
+                display: none;
+            }
+
+            .star-rating label {
+                color: rgba(255, 255, 255, 0.3);
+                transition: color 0.2s;
+                cursor: pointer;
+            }
+
+                .star-rating input:checked ~ label,
+                .star-rating label:hover,
+                .star-rating label:hover ~ label {
+                    color: #ffcc00;
+                }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #ffffff;
+            color: #350d36;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+            .submit-btn:hover {
+                background-color: #f8f8f8;
+            }
+
         @media (max-width: 900px) {
             .grid {
                 grid-template-columns: 1fr;
@@ -181,25 +375,26 @@
                 text-align: center;
                 padding: 25px;
             }
+
+            .review-card {
+                width: 280px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header met titel links en knoppen rechts -->
     <header>
         <a href="index.html" class="logo">PaboBronnenBank</a>
         <nav class="nav-buttons">
             <a href="bronnen.html" class="nav-btn">BronnenBank</a>
             <a href="kalender.html" class="nav-btn">Agenda &amp; Nieuws</a>
+            <button class="nav-btn" onclick="openModal()">Recensie achterlaten</button>
         </nav>
     </header>
 
-    <!-- Hoofdsectie -->
     <div class="hero-container">
         <div class="grid">
-
-            <!-- Linkerkolom -->
             <div class="left-col">
                 <h1>De plek voor al je bronnen</h1>
                 <div class="img-card">
@@ -207,7 +402,6 @@
                 </div>
             </div>
 
-            <!-- Rechterkolom -->
             <div class="right-col">
                 <h2>Wat is de PaboBronnenBank</h2>
                 <p>
@@ -217,9 +411,180 @@
                     Bekijk de<br>Bronnen
                 </a>
             </div>
-
         </div>
     </div>
 
+    <!-- Recensies Roulerende Slider -->
+    <div class="reviews-section">
+        <h3>Ervaringen van PABO-studenten</h3>
+        <div class="slider-viewport">
+            <div class="slider-track" id="sliderTrack">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="review-text">Laden van recensies...</div>
+                    <div class="review-author">PaboBronnenBank</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Formulier voor Recensie -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <h3>Recensie achterlaten</h3>
+            <form id="reviewForm" onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label>Beoordeling:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="sterren" value="5" required><label for="star5">★</label>
+                        <input type="radio" id="star4" name="sterren" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="sterren" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="sterren" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="sterren" value="1"><label for="star1">★</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="naam">Je naam:</label>
+                    <input type="text" id="naam" name="naam" placeholder="Bijv. Sanne (Groep 6)" required>
+                </div>
+                <div class="form-group">
+                    <label for="recensie">Je recensie:</label>
+                    <textarea id="recensie" name="recensie" rows="4" placeholder="Wat vind je van de PaboBronnenBank?" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Versturen</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHS9wIOHysBRvOSLE8LC-cVfUsrlFtPKSj11UKAkwiRMidskN0B50KU19VhRJPhlTqsg/exec";
+
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+
+        async function submitReview(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Versturen...";
+            submitBtn.disabled = true;
+
+            const payload = {
+                action: "recensie",
+                naam: document.getElementById('naam').value,
+                sterren: document.querySelector('input[name="sterren"]:checked').value,
+                recensie: document.getElementById('recensie').value
+            };
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                alert("Bedankt voor je recensie!");
+                document.getElementById('reviewForm').reset();
+                closeModal();
+                loadData(); // Herlaad direct na insturen
+            } catch (err) {
+                alert("Er ging iets mis bij het versturen. Probeer het opnieuw.");
+                console.error(err);
+            } finally {
+                submitBtn.innerText = "Versturen";
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function loadData() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+
+                // Alleen echte recensies verwerken als ze in de sheet staan
+                if (data.recensies && data.recensies.length > 0) {
+                    processAndRenderReviews(data.recensies);
+                } else {
+                    showNoReviewsMessage();
+                }
+            } catch (err) {
+                console.warn("Kon recensies niet laden uit sheet:", err);
+                showNoReviewsMessage();
+            }
+        }
+
+        function processAndRenderReviews(rawReviews) {
+            // 1. Pak de 10 meest recente recensies uit de sheet
+            const recent10 = rawReviews.slice(-10);
+
+            // 2. Sorteer op aantal sterren (hoogste eerst) en pak de top 5
+            const best5 = recent10
+                .sort((a, b) => (parseInt(b.sterren, 10) || 0) - (parseInt(a.sterren, 10) || 0))
+                .slice(0, 5);
+
+            if (best5.length === 0) {
+                showNoReviewsMessage();
+                return;
+            }
+
+            renderSliderTrack(best5);
+        }
+
+        function showNoReviewsMessage() {
+            const track = document.getElementById('sliderTrack');
+            track.innerHTML = `
+                    <div class="review-card" style="width: 100%; max-width: 500px; margin: 0 auto; text-align: center;">
+                        <div class="stars">★★★★★</div>
+                        <div class="review-text">Er zijn nog geen recensies achtergelaten. Wees de eerste!</div>
+                        <div class="review-author">- PaboBronnenBank</div>
+                    </div>
+                `;
+            // Stop animatie als er geen/slechts 1 melding is
+            track.style.animation = "none";
+        }
+
+        function renderSliderTrack(reviews) {
+            const track = document.getElementById('sliderTrack');
+            track.innerHTML = "";
+
+            // Als er minder dan 3 recensies zijn, hoeft er niet te rouleren
+            if (reviews.length < 3) {
+                track.style.animation = "none";
+                reviews.forEach(rev => appendCard(track, rev));
+                return;
+            }
+
+            // Bij 3 of meer recensies: activeer de vloeiende loop
+            track.style.animation = "scrollLeft 25s linear infinite";
+            const displayList = [...reviews, ...reviews];
+            displayList.forEach(rev => appendCard(track, rev));
+        }
+
+        function appendCard(container, rev) {
+            const starCount = parseInt(rev.sterren, 10) || 5;
+            const starString = "★".repeat(starCount) + "☆".repeat(5 - starCount);
+
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                    <div class="stars">${starString}</div>
+                    <div class="review-text">"${rev.recensie}"</div>
+                    <div class="review-author">- ${rev.naam}</div>
+                `;
+            container.appendChild(card);
+        }
+
+        loadData();
+    </script>
 </body>
 </html>
